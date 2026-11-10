@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Cell VNIT | Entrepreneurship Cell</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+
+    :root {
+     
+      --text-main: #111111;
+      --text-muted: #555555;
+      --accent-color: #ff6600; 
+      
+      --bg-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');
+      --bg-overlay-top: rgba(255, 255, 255, 0.7); 
+      --bg-overlay-bottom: rgba(255, 255, 255, 0.9); 
+      
+      --content-bg: #f5f5f5;
+      --card-bg: #ffffff;
+      --border-color: #dddddd;
+    }
+
+    body.dark-mode {
+      
+      --text-main: #ffffff;
+      --text-muted: #aaaaaa;
+      --accent-color: #0084ff; 
+      
+      --bg-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');
+      --bg-overlay-top: rgba(10, 10, 10, 0.85); 
+      --bg-overlay-bottom: rgba(10, 10, 10, 0.98);
+      
+      --content-bg: #0a0a0a; 
+      --card-bg: #151515; 
+      --border-color: #333333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-image: linear-gradient(135deg, var(--bg-overlay-top), var(--bg-overlay-bottom)), var(--bg-image);
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      color: var(--text-main);
+      transition: background-image 0.4s ease, color 0.4s ease, background-color 0.4s ease;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; transition: color 0.3s; }
+    ul { list-style: none; }
+
+    nav {
+      position: absolute; top: 0; width: 100%; padding: 30px 60px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+    }
+    .logo { font-size: 24px; font-weight: 900; display: flex; align-items: center; letter-spacing: 1px; }
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .nav-links a:hover { color: var(--accent-color); }
+
+    .hero {
+      height: 100vh; position: relative; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+    }
+    .text-the { font-size: 4.5rem; font-weight: 900; letter-spacing: 2px; }
+    .text-large { font-size: 6rem; font-weight: 900; letter-spacing: 1px; color: var(--accent-color); }
+    .text-sub { display: block; font-size: 1.5rem; font-weight: 600; letter-spacing: 8px; margin-top: 10px; }
+
+    .btn-outline {
+      display: inline-block; padding: 12px 35px; border: 2px solid var(--accent-color);
+      color: var(--accent-color); font-size: 13px; font-weight: 800; letter-spacing: 2px;
+      margin-top: 30px; transition: all 0.3s ease;
+    }
+    .btn-outline:hover { background-color: var(--accent-color); color: #ffffff; }
+
+    
+    .scroll-indicator {
+      position: absolute; right: 40px; bottom: 80px; display: flex; align-items: center; gap: 15px;
+      transform: rotate(90deg); transform-origin: right bottom; font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    }
+    .mouse {
+      width: 18px; height: 30px; border: 2px solid var(--text-main); border-radius: 15px;
+      position: relative; transform: rotate(-90deg);
+    }
+    .mouse::before {
+      content: ''; position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+      width: 3px; height: 6px; background-color: var(--text-main); border-radius: 2px;
+      animation: scroll 1.5s infinite;
+    }
+    @keyframes scroll { 0% { top: 5px; opacity: 1; } 100% { top: 15px; opacity: 0; } }
+
+    .content-container {
+      background-color: var(--content-bg);
+      position: relative; z-index: 5;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .section-padding { padding: 100px 5vw; width: 100%; max-width: 1400px; text-align: center; }
+
+    .section-title {
+      font-size: 3rem; font-weight: 900; color: var(--accent-color);
+      margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .section-title.bordered {
+      display: inline-block; padding-bottom: 10px; margin-bottom: 60px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .about-text {
+      font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);
+      max-width: 900px; margin: 0 auto 80px auto; font-style: italic;
+    }
+
+    .stats-row {
+      display: flex; justify-content: space-around; flex-wrap: wrap; gap: 40px;
+    }
+    .stat-box { display: flex; flex-direction: column; align-items: center; }
+    .stat-box i { font-size: 3.5rem; color: var(--text-muted); margin-bottom: 20px; }
+    .stat-box h3 { font-size: 2.5rem; color: var(--accent-color); font-weight: 800; margin-bottom: 5px; }
+    .stat-box p { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; width: 100%;
+    }
+
+    .initiative-card {
+      background-color: var(--card-bg); border-radius: 8px; padding: 40px 30px;
+      text-align: left; display: flex; flex-direction: column; position: relative;
+    }
+    .card-icon-top {
+      font-size: 4rem; color: var(--accent-color); text-align: center; margin-bottom: 20px;
+    }
+    .initiative-card h3 { font-size: 1.8rem; font-weight: 800; color: var(--accent-color); margin-bottom: 15px; text-transform: uppercase;}
+    .initiative-card p { font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 30px; flex-grow: 1; }
+    
+    .btn-card {
+      display: block; width: 100%; text-align: center; padding: 12px 0;
+      border: 1px solid var(--accent-color); color: var(--accent-color);
+      font-weight: 700; letter-spacing: 1px; transition: all 0.3s;
+    }
+    .btn-card:hover { background-color: var(--accent-color); color: #fff; }
+
+    .event-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+      padding: 30px; height: 100%;
+    }
+    .event-logo-placeholder {
+      font-size: 5rem; color: var(--text-main); margin-bottom: 20px; transition: color 0.3s;
+    }
+    .event-logo-placeholder:hover { color: var(--accent-color); }
+    .event-title {
+      font-size: 1.5rem; font-weight: 800; color: var(--accent-color); margin-bottom: 20px; text-transform: uppercase;
+    }
+
+ 
+    .contact-form {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 900px; margin: 0 auto; text-align: left;
+    }
+    .form-col { display: flex; flex-direction: column; gap: 20px; }
+    
+    input, textarea {
+      width: 100%; background: transparent; border: 1px solid var(--accent-color);
+      padding: 15px; color: var(--text-main); font-size: 1rem; font-family: inherit;
+    }
+    input:focus, textarea:focus { outline: none; box-shadow: 0 0 10px rgba(0, 132, 255, 0.2); }
+    textarea { height: 100%; min-height: 180px; resize: none; }
+    
+    .btn-submit {
+      grid-column: 1 / -1; justify-self: center; background: transparent; border: 1px solid var(--accent-color);
+      color: var(--accent-color); padding: 12px 50px; font-weight: 700; letter-spacing: 2px;
+      cursor: pointer; transition: 0.3s; margin-top: 20px; font-size: 1rem; text-transform: uppercase;
+    }
+    .btn-submit:hover { background: var(--accent-color); color: #fff; }
+
+    @media(max-width: 768px) { .contact-form { grid-template-columns: 1fr; } }
+
+
+    footer {
+      background-color: var(--content-bg); border-top: 1px solid var(--border-color);
+      padding: 60px 5vw 20px 5vw; text-align: center; font-size: 0.9rem; width: 100%;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;
+      text-align: left; margin-bottom: 50px; max-width: 1400px; margin-left: auto; margin-right: auto;
+    }
+    .footer-col h4 { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; }
+    .footer-col p, .footer-col a { color: var(--text-muted); line-height: 1.8; display: block; margin-bottom: 10px; }
+    .footer-col a:hover { color: var(--accent-color); }
+    .footer-socials { display: flex; flex-direction: column; gap: 15px; }
+    .footer-socials a i { font-size: 1.2rem; width: 30px; text-align: center; }
+    
+    .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 20px; color: var(--text-muted); }
+    .footer-bottom span { color: var(--accent-color); font-weight: 700; }
+
+  
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 4px; background-color: var(--accent-color); width: 0%; z-index: 9999;
+    }
+    .floating-controls {
+      position: fixed; right: 20px; bottom: 20px; z-index: 999; display: flex; flex-direction: column; gap: 15px;
+    }
+    .floating-btn {
+      background-color: var(--accent-color); color: #fff; border: none; border-radius: 50%;
+      width: 50px; height: 50px; font-size: 20px; cursor: pointer; transition: 0.3s;
+    }
+    .floating-btn:hover { transform: scale(1.1); }
+    #back-to-top { opacity: 0; visibility: hidden; }
+    #back-to-top.show { opacity: 1; visibility: visible; }
+  </style>
+</head>
+
+<body class="dark-mode">
+
+  <div id="scroll-progress"></div>
+
+  <nav>
+    <div class="logo"><i class="fa-solid fa-sun" style="margin-right:8px;"></i> E-CELL</div>
+    <div class="nav-links">
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#initiatives">INITIATIVES</a>
+      <a href="#events">EVENTS</a>
+      <a href="#team">TEAM</a>
+      <a href="#sponsors">SPONSORS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </nav>
+
+  <section id="home" class="hero">
+    <h1 class="hero-title">
+      <span class="text-the">THE</span><br>
+      <span class="text-large">ENTREPRENEURSHIP</span><br>
+      <span class="text-large">CELL</span><br>
+      <span class="text-sub">VNIT NAGPUR</span>
+    </h1>
+    <a href="#about" class="btn-outline">EXPLORE</a>
+    <div class="scroll-indicator"><span>SCROLL</span><div class="mouse"></div></div>
+  </section>
+
+  <main class="content-container">
+    
+    <section id="about" class="section-padding reveal">
+      <h2 class="section-title">What is E-Cell?</h2>
+      <p class="about-text">
+        “E-Cell VNIT is an entrepreneurship cell based at Visvesvaraya National Institute of Technology that mentors and guides new and existing startups. It aims to foster a community of entrepreneurs, with programs and events that provide deserving individuals with opportunities to develop entrepreneurial skills and succeed. We stand as pillars of support for budding entrepreneurs, providing them with personalized guidance from experienced mentors, crucial funding opportunities, and a robust network that can change the course of their journey forever!”
+      </p>
+      
+      <div class="stats-row">
+        <div class="stat-box"><i class="fa-solid fa-building"></i><h3>500 +</h3><p>Cities</p></div>
+        <div class="stat-box"><i class="fa-solid fa-user-graduate"></i><h3>5000 +</h3><p>Students</p></div>
+        <div class="stat-box"><i class="fa-solid fa-rocket"></i><h3>500 +</h3><p>Startups</p></div>
+        <div class="stat-box"><i class="fa-solid fa-microphone"></i><h3>500 +</h3><p>Speakers</p></div>
+      </div>
+    </section>
+
+    <section id="initiatives" class="section-padding reveal">
+      <h2 class="section-title bordered">Initiatives</h2>
+      
+      <div class="grid-3">
+        <div>
+          <div class="card-icon-top"><i class="fa-solid fa-rocket"></i><br><span style="font-size:1rem;">LaunchPad</span></div>
+          <div class="initiative-card">
+            <h3>Launchpad</h3>
+            <p>Got an idea that can change the game? Launchpad is your chance to pitch, build, and shine! Join E-Cell's ultimate idea-stage startup competition, get mentored by industry pros, and take your first step toward becoming a founder. Registrations are now open - let's launch your dream!.</p>
+            <a href="#" class="btn-card">KNOW MORE</a>
+          </div>
+        </div>
+        
+        <div>
+          <div class="card-icon-top"><i class="fa-solid fa-cube"></i><br><span style="font-size:1rem;">NEO</span></div>
+          <div class="initiative-card">
+            <h3>NEO</h3>
+            <p>National Entrepreneurship Olympiad is a PAN - India examination and a skill enhancement program for the students of class 6th to 12th grade to nurture and test their entrepreneurial skills. This Olympiad includes sections like Basic Entrepreneurial Concepts, Value Proposition, Finances...</p>
+            <a href="#" class="btn-card">KNOW MORE</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="card-icon-top"><i class="fa-solid fa-copyright"></i><br><span style="font-size:1rem;">C-Suites</span></div>
+          <div class="initiative-card">
+            <h3>C-Suites</h3>
+            <p>C-Suites is a community of like-minded people within VNIT Nagpur where we grow ourselves individually along with people around us. The mission seeks to create a self-sustained ecosystem, where peers discuss and learn from each other through regular group interactions.</p>
+            <a href="#" class="btn-card">KNOW MORE</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events" class="section-padding reveal">
+      <h2 class="section-title bordered">Events</h2>
+      
+      <div class="grid-3" style="margin-bottom: 60px;">
+        <div class="event-card">
+          <i class="fa-solid fa-sailboat event-logo-placeholder"></i>
+          <h3 class="event-title">Flagship</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-arrow-trend-up event-logo-placeholder"></i>
+          <h3 class="event-title">Startup Conclave</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-bolt event-logo-placeholder"></i>
+          <h3 class="event-title">Jugaad</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="event-card">
+          <i class="fa-solid fa-film event-logo-placeholder"></i>
+          <h3 class="event-title">Adventure</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-chart-line event-logo-placeholder"></i>
+          <h3 class="event-title">Wallstreet</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-user-tie event-logo-placeholder"></i>
+          <h3 class="event-title">CEO</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-pen-nib event-logo-placeholder"></i>
+          <h3 class="event-title">Render.ico</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-gavel event-logo-placeholder"></i>
+          <h3 class="event-title">IPL Auction</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-droplet event-logo-placeholder"></i>
+          <h3 class="event-title">Swades</h3>
+          <a href="#" class="btn-card">KNOW MORE</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-padding reveal">
+      <h2 class="section-title bordered">Connect With Us</h2>
+      
+      <form class="contact-form">
+        <div class="form-col">
+          <input type="text" placeholder="Name" required>
+          <input type="email" placeholder="Email" required>
+          <input type="tel" placeholder="Phone" required>
+        </div>
+        <div class="form-col">
+          <textarea placeholder="Message" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">SUBMIT</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h2 style="font-weight:900; letter-spacing:2px; font-size:2rem;"><i class="fa-solid fa-sun"></i> E-CELL</h2>
+        <p style="font-size:0.8rem;">The Entrepreneurship Cell, VNIT</p>
+      </div>
+      <div class="footer-col">
+        <h4>Consortium'25</h4>
+        <p>Consortium, the Annual Entrepreneurship Summit and Management Fest of VNIT, Nagpur</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="#">STARTUP CONCLAVE</a>
+        <a href="#">STARTUP EXPO</a>
+        <a href="#">MERCHANDISE</a>
+        <a href="#">NEO</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p>For Public Affairs & Communications:<br><span style="color:var(--text-main); font-weight:bold;">publicrelations@ecellvnit.co.in</span></p>
+        <p>For Association and Sponsorship:<br><span style="color:var(--text-main); font-weight:bold;">corporateaffairs@ecellvnit.co.in</span></p>
+      </div>
+      <div class="footer-col footer-socials">
+        <h4>Follow Us</h4>
+        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="#"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+        <a href="#"><i class="fa-brands fa-youtube"></i> YouTube</a>
+        <a href="#"><i class="fa-brands fa-twitter"></i> Twitter</a>
+      </div>
+    </div>
+    
+    <div class="footer-col" style="text-align: center; max-width: 600px; margin: 0 auto 30px auto;">
+      <h4>Visit Us</h4>
+      <p>E-Cell office, 1st Floor VNIT Canteen, Visvesvaraya National Institute Of Technology, South Ambazari Road, Abhyankar Nagar, Nagpur-440010</p>
+    </div>
+
+    <div class="footer-bottom">
+      <p>Copyright: <span>E-CELL VNIT</span></p>
+    </div>
+  </footer>
+
+  <div class="floating-controls">
+    <button id="theme-toggle" class="floating-btn" title="Toggle Theme"><span id="theme-icon">☀️</span></button>
+    <button id="back-to-top" class="floating-btn" title="Go to top">↑</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const body = document.body;
+
+      if (localStorage.getItem('theme') === 'light') {
+        body.classList.remove('dark-mode');
+        themeIcon.textContent = '🌙';
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('theme', 'dark');
+          themeIcon.textContent = '☀️';
+        } else {
+          localStorage.setItem('theme', 'light');
+          themeIcon.textContent = '🌙';
+        }
+      });
+      const scrollProgress = document.getElementById('scroll-progress');
+      const backToTopBtn = document.getElementById('back-to-top');
+
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        scrollProgress.style.width = (scrollTop / scrollHeight) * 100 + '%';
+        
+        if (scrollTop > 300) { backToTopBtn.classList.add('show'); } 
+        else { backToTopBtn.classList.remove('show'); }
+      });
+
+      backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+     
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+      revealElements.forEach(el => revealOnScroll.observe(el));
+    });
+  </script>
+</body>
+</html>
